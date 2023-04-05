@@ -1,0 +1,84 @@
+[book]
+title = "trilitech_task"
+authors = ["Oliver Anyanwu"]
+language = "en"
+multilingual = false
+src = "src"
+
+#################
+# PREPROCESSORS #
+################# 
+
+[preprocessor.theme]
+pagetoc        = true
+
+pagetoc-width            = "13%"
+content-max-width        = "70%" # 82
+pagetoc-fontsize         = "14.5px"
+sidebar-width            = "300px"
+menu-bar-height          = "40px" 
+page-padding             = "20px"
+mobile-content-max-width = "98%"
+
+
+content-padding           = "0 10px"
+content-main-margin-left  = "10%"
+content-main-margin-right = "10%"
+nav-chapters-max-width    = "auto"
+nav-chapters-min-width    = "auto"
+chapter-line-height       = "2em"
+section-line-height       = "1.5em"
+
+turn-off = true 
+
+[preprocessor.admonish]
+command = "mdbook-admonish"
+assets_version = "2.0.0" # do not edit: managed by `mdbook-admonish install`
+
+
+#########
+# BUILD #
+#########
+
+[build]
+build-dir = "book"               
+create-missing = true             
+use-default-preprocessors = true  
+extra-watch-dirs = []             
+
+##########
+# OUTPUT #
+########## 
+
+[output.html]
+default-theme = "coal"
+preferred-dark-theme = "coal"
+curly-quotes = true
+copy-fonts = true
+no-section-label = false
+additional-css = ["theme/pagetoc.css", "././mdbook-admonish.css"]
+additional-js  = ["theme/pagetoc.js"]
+
+[output.html.fold]
+enable = true    
+level = 0        
+
+
+[output.html.playground]
+editable = false         
+copyable = true          
+copy-js = true           
+line-numbers = false     
+runnable = true          
+
+[output.html.search]
+enable = true            
+limit-results = 30       
+teaser-word-count = 30   
+use-boolean-and = true   
+boost-title = 2          
+boost-hierarchy = 1      
+boost-paragraph = 1      
+expand = true            
+heading-split-level = 3  
+copy-js = true           

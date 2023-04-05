@@ -1,0 +1,651 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Adding and removing liquidity - trilitech_task</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href="../././mdbook-admonish.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Tutorials</li><li class="chapter-item expanded "><a href="../tutorials/overview-1.0.html"><strong aria-hidden="true">1.</strong> Creating a Simple dApp on Tezos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../tutorials/page-1.0.html"><strong aria-hidden="true">1.1.</strong> Pre-requisites</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.html"><strong aria-hidden="true">1.2.</strong> Setting up the dapp</a></li><li class="chapter-item "><a href="../tutorials/page-1.2.html"><strong aria-hidden="true">1.3.</strong> Wallet and user’s tokens</a></li><li class="chapter-item "><a href="../tutorials/page-1.3.html"><strong aria-hidden="true">1.4.</strong> Swapping tokens</a></li><li class="chapter-item expanded "><a href="../tutorials/page-1.4.html" class="active"><strong aria-hidden="true">1.5.</strong> Adding and removing liquidity</a></li><li class="chapter-item "><a href="../tutorials/page-1.5.html"><strong aria-hidden="true">1.6.</strong> Conclusion</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">trilitech_task</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <h1 id="adding-and-removing-liquidity"><a class="header" href="#adding-and-removing-liquidity">Adding and removing liquidity</a></h1>
+<p>The most complex part of this tutorial about adding liquidity to the Liquidity Baking contract is to get the amounts of tokens right.</p>
+<p>The LB DEX gives you the ability to provide a pair of tokens (only 2 choices here, XTZ and tzBTC) as liquidity to enable the swapping feature. In exchange, you get SIRS tokens to represent your investment. These tokens increase in value over time, so if you wait long enough, you can make a profit when you remove your liquidity, which will be explained down below.</p>
+<p>We aiming for the UI to look similar to the swapping interface, with a few difference:</p>
+<p><img src="images/image-2.png.webp" alt="image-1" /></p>
+<p>Like before, we have 2 input fields, but this time, there is no middle button to switch between the 2 tokens and both inputs are editable.</p>
+<p>When inputting a number in one of the fields, the dapp must calculate the corresponding amount of the other token, as well as the expected amount in SIRS that will be received.</p>
+<h3 id="converting-the-input"><a class="header" href="#converting-the-input">Converting the input</a></h3>
+<p>When the user is going to input a number in one of the fields, the input will dispatch a new event to the interface component with the name of the token involved and the amount that was input.</p>
+<ol>
+<li>Make sure the <code>AddLiquidity.svelte</code> file looks something like this:</li>
+</ol>
+<pre><code class="language-TS">&lt;script lang=&quot;ts&quot;&gt;
+  ... your TypeScript code
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+   ... your SASS code
+&lt;/style&gt;
+
+... your HTML code
+</code></pre>
+<p>Import the following libraries and components inside the <code>&lt;script&gt;</code> tag:</p>
+<pre><code class="language-TS">  import { OpKind } from &quot;@taquito/taquito&quot;;
+  import store from &quot;../store&quot;;
+  import UserInput from &quot;./UserInput.svelte&quot;;
+  import { type token, TxStatus } from &quot;../types&quot;;
+  import {
+    addLiquidityTokenIn,
+    tokenToXtzXtzOutput,
+    addLiquidityLiquidityCreated
+  } from &quot;../lbUtils&quot;;
+  import { dexAddress, tzbtcAddress, XTZ, tzBTC } from &quot;../config&quot;;
+  import { calcDeadline, fetchBalances } from &quot;../utils&quot;;
+</code></pre>
+<p>Below this, also declare these variables:</p>
+<pre><code class="language-TS">  let inputXtz = &quot;&quot;;
+  let inputTzbtc = &quot;&quot;;
+  let sirsOutput = 0;
+  let addLiquidityStatus = TxStatus.NoTransaction;
+  let resetXtzInput = false;
+  let resetTzbtcInput = false;
+
+  let swapStatus = TxStatus.NoTransaction;
+</code></pre>
+<p>Also don’t forget to include the <code>onMount</code> function we created previous and the end of the <code>&lt;script&gt;</code>.</p>
+<ol start="2">
+<li>This data will be read by the <code>saveInput</code> function. By adding the following function:</li>
+</ol>
+<pre><code class="language-TS">const saveInput = ev =&gt; {
+    const { token, val }: { token: token; val: number | null } = ev.detail;
+    ...
+}
+</code></pre>
+<ol start="3">
+<li>Then, we will introduce a condition based on the token because the calculations will be different to convert an amount of XTZ into tzBTC and vice-versa. </li>
+</ol>
+<p>Starting with XTZ, inside the <code>saveInput</code> function:</p>
+<pre><code class="language-TS">if (token === &quot;XTZ&quot; &amp;&amp; val &amp;&amp; val &gt; 0) {
+  inputXtz = val.toString();
+  let tzbtcAmount = addLiquidityTokenIn({
+    xtzIn: val * 10 ** 6,
+    xtzPool: $store.dexInfo.xtzPool,
+    tokenPool: $store.dexInfo.tokenPool
+  });
+  if (tzbtcAmount) {
+    inputTzbtc = tzbtcAmount.dividedBy(10 ** 8).toPrecision(6);
+  } else {
+    inputTzbtc = &quot;&quot;;
+  }
+  ...
+}
+</code></pre>
+<p>The condition also includes a check for the value, as there is no need to process it if the value is <code>nul</code>l or <code>0</code>.</p>
+<ol start="4">
+<li>The value is cast to a string and stored in the <code>inputXtz</code> variable to be used later. The corresponding amount of tzBTC is calculated with the <code>addLiquidityTokenIn</code> function.</li>
+</ol>
+<p>For calculating the different token amounts for the LB DEX, we’ll following under the <code>saveInput</code> function:</p>
+<pre><code class="language-TS">const addLiquidityTokenIn = (p: {
+  xtzIn: BigNumber | number;
+  xtzPool: BigNumber | number;
+  tokenPool: BigNumber | number;
+}): BigNumber | null =&gt; {
+  const { xtzIn, xtzPool, tokenPool } = p;
+  let xtzIn_ = new BigNumber(0);
+  let xtzPool_ = new BigNumber(0);
+  let tokenPool_ = new BigNumber(0);
+  try {
+    xtzIn_ = new BigNumber(xtzIn);
+    xtzPool_ = creditSubsidy(xtzPool);
+    tokenPool_ = new BigNumber(tokenPool);
+  } catch (err) {
+    return null;
+  }
+  if (
+    xtzIn_.isGreaterThan(0) &amp;&amp;
+    xtzPool_.isGreaterThan(0) &amp;&amp;
+    tokenPool_.isGreaterThan(0)
+  ) {
+    return ceilingDiv(xtzIn_.times(tokenPool_), xtzPool_);
+  } else {
+    return null;
+  }
+};
+</code></pre>
+<p>This checks the output of addLiquidityTokenIn and we update the inputTzbtc variable.</p>
+<ol start="5">
+<li>If the user inputs an amount in tzBTC, the steps will be very similar to calculate the corresponding amount in XTZ. Back inside the <code>saveInput</code> function add:</li>
+</ol>
+<pre><code class="language-TS">else if (token === &quot;tzBTC&quot; &amp;&amp; val &amp;&amp; val &gt; 0) {
+  inputTzbtc = val.toString();
+  let xtzAmount = tokenToXtzXtzOutput({
+    tokenIn: val * 10 ** 8,
+    xtzPool: $store.dexInfo.xtzPool,
+    tokenPool: $store.dexInfo.tokenPool
+  });
+  if (xtzAmount) {
+    inputXtz = xtzAmount.dividedBy(10 ** 6).toPrecision(8);
+    ...
+  } else {
+    inputXtz = &quot;&quot;;
+  }
+}
+</code></pre>
+<ol start="6">
+<li>We also need to check that the provided value is correct, after what we use the <code>tokenToXtzXtzOutput</code> function to get the corresponding amount of XTZ to create a valid pair and provide liquidity.</li>
+</ol>
+<p>We’ll use the following function called <code>tokenToXtzOutput</code>:</p>
+<pre><code class="language-TS">const tokenToXtzXtzOutput = (p: {
+  tokenIn: BigNumber | number;
+  xtzPool: BigNumber | number;
+  tokenPool: BigNumber | number;
+}): BigNumber | null =&gt; {
+  const { tokenIn, xtzPool: _xtzPool, tokenPool } = p;
+  let xtzPool = creditSubsidy(_xtzPool);
+  let tokenIn_ = new BigNumber(0);
+  let xtzPool_ = new BigNumber(0);
+  let tokenPool_ = new BigNumber(0);
+  try {
+    tokenIn_ = new BigNumber(tokenIn);
+    xtzPool_ = new BigNumber(xtzPool);
+    tokenPool_ = new BigNumber(tokenPool);
+  } catch (err) {
+    return null;
+  }
+  if (
+    tokenIn_.isGreaterThan(0) &amp;&amp;
+    xtzPool_.isGreaterThan(0) &amp;&amp;
+    tokenPool_.isGreaterThan(0)
+  ) {
+    let numerator = new BigNumber(tokenIn)
+      .times(new BigNumber(xtzPool))
+      .times(new BigNumber(998001));
+    let denominator = new BigNumber(tokenPool)
+      .times(new BigNumber(1000000))
+      .plus(new BigNumber(tokenIn).times(new BigNumber(999000)));
+    return numerator.dividedBy(denominator);
+  } else {
+    return null;
+  }
+};
+</code></pre>
+<p>Once this is calculated, we store the result in the <code>inputXtz</code> variable for later use.</p>
+<h3 id="calculating-the-expected-amount-of-sirs"><a class="header" href="#calculating-the-expected-amount-of-sirs">Calculating the expected amount of SIRS</a></h3>
+<p>Now, we have to calculate the corresponding amount of SIRS that will be created if inputXtz and inputTzbtc are provided as parameters to add liquidity.</p>
+<ol>
+<li>The <code>addLiquidityLiquidityCreated</code> function does carries this out for us. Use the following code inside the <code>lbUtils.ts</code>:</li>
+</ol>
+<pre><code class="language-TS">const addLiquidityLiquidityCreated = (p: {
+  xtzIn: BigNumber | number;
+  xtzPool: BigNumber | number;
+  totalLiquidity: BigNumber | number;
+}): BigNumber | null =&gt; {
+  const { xtzIn, xtzPool, totalLiquidity } = p;
+  let xtzIn_ = new BigNumber(0);
+  let xtzPool_ = new BigNumber(0);
+  let totalLiquidity_ = new BigNumber(0);
+  try {
+    xtzIn_ = new BigNumber(xtzIn);
+    xtzPool_ = new BigNumber(xtzPool);
+    totalLiquidity_ = new BigNumber(totalLiquidity);
+  } catch (err) {
+    return null;
+  }
+  xtzPool_ = creditSubsidy(xtzPool_);
+
+if (xtzIn_.isGreaterThan(0) &amp;&amp; xtzPool_.isGreaterThan(0)) {
+  if (totalLiquidity_.isEqualTo(0)) {
+    return new BigNumber(xtzIn)
+    .times(new BigNumber(totalLiquidity))
+    .dividedBy(new BigNumber(xtzPool));
+  } else if (totalLiquidity_.isGreaterThan(0)) {
+    return new BigNumber(xtzIn)
+    .times(new BigNumber(totalLiquidity))
+    .dividedBy(new BigNumber(xtzPool));
+  }
+    return null;
+  } else {
+    return null;
+  }
+};
+</code></pre>
+<div id="admonition-what-are-these" class="admonition tip">
+<div class="admonition-title">
+<p>What are these?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-are-these"></a></p>
+</div>
+<div>
+<p>This function looks at 3 parameters:</p>
+<ul>
+<li>The amount of XTZ you want to add as liquidity</li>
+<li>The current state of the XTZ pool</li>
+<li>The total amount of liquidity available in the contract (i.e. the SIRS tokens)</li>
+</ul>
+</div>
+</div>
+<p>It will output the amount of SIRS created after the transaction. This amount is stored in the <code>sirsOutput</code> variable to be displayed in the interface.</p>
+<h3 id="sending-the-tokens"><a class="header" href="#sending-the-tokens">Sending the tokens</a></h3>
+<p>After we calculated all the values we need to add liquidity to the Liquidity Baking contract.</p>
+<ol>
+<li>Back in the <code>AddLiquidityView.svelte</code> file, add this new function:</li>
+</ol>
+<pre><code class="language-TS">const addLiquidity = async () =&gt; {
+  try {
+    if (inputXtz &amp;&amp; inputTzbtc &amp;&amp; sirsOutput) {
+      addLiquidityStatus = TxStatus.Loading;
+      store.updateToast(
+        true,
+        &quot;Adding liquidity, waiting for confirmation...&quot;
+      );
+      const tzbtcForLiquidity = Math.floor(
+        +inputTzbtc * 10 ** tzBTC.decimals
+      );
+      const lbContract = await $store.Tezos.wallet.at(dexAddress);
+      const tzBtcContract = await $store.Tezos.wallet.at(tzbtcAddress);
+    ...
+}
+</code></pre>
+<p>We need check that the 3 values we need, the amounts of XTZ, tzBTC, and SIRS are available. If it is the case, we update the UI by switching the <code>addLiquidityStatus</code> variable to <code>TxStatus.Loading</code> and by displaying a simple toast with a message.</p>
+<p>After that, we convert the amount of tzBTC we got into its “real” value, i.e. the value without decimal points as stored in its contract.</p>
+<p>Then, we create the <code>ContractAbstraction</code> for the LB DEX and the <code>ContractAbstraction</code> for the tzBTC contract, as we will interact with both.</p>
+<div id="admonition-info" class="admonition info">
+<div class="admonition-title">
+<p>Info</p>
+<p><a class="admonition-anchor-link" href="#admonition-info"></a></p>
+</div>
+<div>
+<p>Every time your users want to use tzBTC with the LB DEX, the amount of tokens that will be used needs to be approved at the tzBTC contract level, which requires 3 different operations.</p>
+</div>
+</div>
+Now we need to create a batched transaction, howver we'll do it differently to the previous section of this tutorial for variation. Here's an example of how this can be carried out:
+<pre><code class="language-TS">const batch = $store.Tezos.wallet.batch([
+  {
+    kind: OpKind.TRANSACTION,
+    ...tzBtcContract.methods.approve(dexAddress, 0).toTransferParams()
+  }, // is the transaction required to set the amount of approved tzBTC for the LB DEX to zero.
+  {
+    kind: OpKind.TRANSACTION,
+    ...tzBtcContract.methods
+    .approve(dexAddress, tzbtcForLiquidity)
+    .toTransferParams()
+  }, // sets the amount of approved tzBTC for the LB DEX contract.
+  {
+    kind: OpKind.TRANSACTION,
+    ...lbContract.methodsObject
+    .addLiquidity({
+      owner: $store.userAddress,
+      minLqtMinted: sirsOutput,
+      maxTokensDeposited: tzbtcForLiquidity,
+      deadline: calcDeadline()
+    })
+    .toTransferParams(),
+    amount: +inputXtz
+  }, // sets the amount of approved tzBTC for the LB DEX contract, with 4 paarameters
+  {
+    kind: OpKind.TRANSACTION,
+    ...tzBtcContract.methods.approve(dexAddress, 0).toTransferParams()
+  } // resets the allowed amount of tzBTC to be used by the LB DEX to zero
+]);
+
+const batchOp = await batch.send();
+await batchOp.confirmation();
+</code></pre>
+<p>In the previous chapter, the batched transaction was created using the <code>withContractCall</code> method available on the <code>batch</code>method. Here, we will actually pass a parameter to the <code>batch()</code> method, an array containing multiple objects that each represent an operation.</p>
+<p>Like any other transaction forged through Taquito, you call <code>.send()</code> and <code>.confirmation()</code> on the operation object to wait for one confirmation.</p>
+<p>Once the transaction is confirmed, you clear the UI before fetching the new balances of XTZ, tzBTC, and SIRS.</p>
+<p>To update the UI to provide visual feedback, we can add the following to the end of funcction that is fetching the user’s XTZ, tzBTC and SIRS balances:</p>
+<pre><code class="language-TS">addLiquidityStatus = TxStatus.Error;
+store.updateToast(true, &quot;An error has occurred&quot;);
+</code></pre>
+<p>Also using the 3 seconds timeout would be useful:</p>
+<pre><code class="language-TS">setTimeout(() =&gt; {
+  addLiquidityStatus = TxStatus.NoTransaction;
+  store.showToast(false);
+}, 3000);
+</code></pre>
+<div id="admonition-default" class="admonition success">
+<div>
+<p>The user now has the ability to add liquidity to the Liquidity Baking DEX and invest their XTZ and tzBTC.</p>
+</div>
+</div>
+<h3 id="removing-liquidity"><a class="header" href="#removing-liquidity">Removing liquidity</a></h3>
+<p>Removing liquidity from the Liquidity Baking contract is arguably the easiest of all the tasks accomplished by our interface. The interface only needs one input to receive the amount of SIRS that the user wants to unwrap to get XTZ and tzBTC.</p>
+<p>The dapp will then calculate the corresponding amount of XTZ and tzBTC expected to be received for the amount of SIRS in the input field.</p>
+<ol>
+<li>Inside the <code>lbUtils.ts</code> file, we can create <code>removeLiquidityXtzTzbtcOut</code> function to calculate these amounts. </li>
+</ol>
+<p>Using the following will help achieve this:</p>
+<pre><code class="language-TS">const outputRes = removeLiquidityXtzTzbtcOut({
+  liquidityBurned: val, // the amount of SIRS to burn
+  totalLiquidity: $store.dexInfo.lqtTotal.toNumber(), // the total amount of SIRS tokens in the contract
+  xtzPool: $store.dexInfo.xtzPool.toNumber(), // the total amount of XTZ tokens in the contract
+  tokenPool: $store.dexInfo.tokenPool.toNumber() // the total amount of tzBTC tokens in the contract
+});
+if (outputRes) {
+  const { xtzOut, tzbtcOut } = outputRes;
+  xtzOutput = xtzOut
+    .decimalPlaces(0, 1)
+    .dividedBy(10 ** 6)
+    .decimalPlaces(6)
+    .toNumber();
+  tzbtcOutput = tzbtcOut
+    .decimalPlaces(0, 1)
+    .dividedBy(10 ** 8)
+    .decimalPlaces(8)
+    .toNumber();
+}
+</code></pre>
+<p>If the function has been able to calculate the amounts of XTZ and tzBTC, they are returned in an object, otherwise <code>null</code>is returned. After that, those amounts can be displayed in the interface.</p>
+<p>Now, we must implement a way to interact with the <code>removeLiquidity</code> entrypoint of the contract. </p>
+<ol>
+<li>Make sure the <code>RemoveLiquidityView.svelte</code> file looks something like this:</li>
+</ol>
+<pre><code class="language-TS">&lt;script lang=&quot;ts&quot;&gt;
+  ... your TypeScript code
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+   ... your SASS code
+&lt;/style&gt;
+
+... your HTML code
+</code></pre>
+<p>Import the following libraries and components inside the <code>&lt;script&gt;</code> tag:</p>
+<pre><code class="language-TS">  import store from &quot;../store&quot;;
+  import UserInput from &quot;./UserInput.svelte&quot;;
+  import { removeLiquidityXtzTzbtcOut } from &quot;../lbUtils&quot;;
+  import { TxStatus } from &quot;../types&quot;;
+  import { calcDeadline, fetchBalances } from &quot;../utils&quot;;
+  import { dexAddress, XTZ, tzBTC } from &quot;../config&quot;;
+</code></pre>
+<p>Below this, also declare these variables:</p>
+<pre><code class="language-TS">  let inputSirs = &quot;&quot;;
+  let xtzOutput = 0;
+  let tzbtcOutput = 0;
+  let resetInput = false;
+  let removeLiquidityStatus = TxStatus.NoTransaction;
+</code></pre>
+<p>Also don’t forget to include the <code>onMount</code> function we created previous and the end of the <code>&lt;script&gt;</code>.</p>
+<div id="admonition-info-1" class="admonition info">
+<div class="admonition-title">
+<p>Info</p>
+<p><a class="admonition-anchor-link" href="#admonition-info-1"></a></p>
+</div>
+<div>
+<p>The file should also have the <code>saveInput</code> function as this will be retaining the data that we’ll be removing.</p>
+</div>
+</div>
+<ol start="2">
+<li>First, we create a removeLiquidity function within our TypeScript code that will be triggered when the user clicks on the Remove liquidity button:</li>
+</ol>
+<pre><code class="language-TS">const removeLiquidity = async () =&gt; {
+  try {
+  if (inputSirs) {
+    removeLiquidityStatus = TxStatus.Loading;
+    store.updateToast(
+      true,
+      &quot;Removing liquidity, waiting for confirmation...&quot;
+    );
+    const lbContract = await $store.Tezos.wallet.at(dexAddress);
+          
+  ...
+};
+</code></pre>
+<p>The function starts by checking if there is an amount of SIRS that was input before the remove liquidity action was triggered. If that’s the case, the <code>removeLiquidityStatus</code> is set to <code>loading</code> to update the UI and inform the user that the transaction is getting ready. A toast will also be displayed.</p>
+<p>Then <code>ContractAbstraction</code> is created for the LB DEX in order to interact with it from Taquito.</p>
+<ol start="3">
+<li>Now we can forge the actual transaction by also adding:</li>
+</ol>
+<pre><code class="language-TS">const op = await lbContract.methodsObject
+  .removeLiquidity({
+    to: $store.userAddress, //  the account that will receive the XTZ and tzBTC
+    lqtBurned: inputSirs, // the amount of SIRS to burn
+    minXtzWithdrawn: Math.floor(xtzOutput * 10 ** XTZ.decimals), // the minimum amount of XTZ expected to be received
+    minTokensWithdrawn: Math.floor(tzbtcOutput * 10 ** tzBTC.decimals), // the minimum amount of tzBTC expected to be received
+    deadline: calcDeadline() //  just as the other entrypoint, a deadline for the transaction must be provided
+  })
+  .send();
+await op.confirmation();
+</code></pre>
+<p>After the transaction has been emitted, we call .confirmation() on the operation object returned by Taquito.</p>
+<ol start="4">
+<li>Similar to before, if transaction was successful, we update the UI and reset the token values:</li>
+</ol>
+<pre><code class="language-TS">removeLiquidityStatus = TxStatus.Success;
+inputSirs = &quot;&quot;;
+xtzOutput = 0;
+tzbtcOutput = 0;
+// fetches user's XTZ, tzBTC and SIRS balances
+const res = await fetchBalances($store.Tezos, $store.userAddress);
+if (res) {
+  store.updateUserBalance(&quot;XTZ&quot;, res.xtzBalance);
+  store.updateUserBalance(&quot;tzBTC&quot;, res.tzbtcBalance);
+  store.updateUserBalance(&quot;SIRS&quot;, res.sirsBalance);
+} else {
+  store.updateUserBalance(&quot;XTZ&quot;, null);
+  store.updateUserBalance(&quot;tzBTC&quot;, null);
+  store.updateUserBalance(&quot;SIRS&quot;, null);
+}
+store.updateToast(true, &quot;Liquidity successfully removed!&quot;);
+</code></pre>
+<p>If it fails:</p>
+<pre><code class="language-TS">removeLiquidityStatus = TxStatus.Error;
+store.updateToast(true, &quot;An error has occurred&quot;);
+</code></pre>
+<div id="admonition-default-1" class="admonition success">
+<div>
+<p>And that’s it, the users have now the possibility to remove SIRS tokens and get XTZ and tzBTC tokens in exchange!</p>
+</div>
+</div>
+<p><a href="/tutorials/page-1.3.html">← Previous Page</a></p>
+<p><a href="/tutorials/page-1.5.html">Next Page →</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tutorials/page-1.3.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../tutorials/page-1.5.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tutorials/page-1.3.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../tutorials/page-1.5.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../theme/pagetoc.js"></script>
+
+
+    </body>
+</html>

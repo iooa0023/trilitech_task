@@ -1,0 +1,582 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Swapping tokens - trilitech_task</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href="../././mdbook-admonish.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Tutorials</li><li class="chapter-item expanded "><a href="../tutorials/overview-1.0.html"><strong aria-hidden="true">1.</strong> Creating a Simple dApp on Tezos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../tutorials/page-1.0.html"><strong aria-hidden="true">1.1.</strong> Pre-requisites</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.html"><strong aria-hidden="true">1.2.</strong> Setting up the dapp</a></li><li class="chapter-item "><a href="../tutorials/page-1.2.html"><strong aria-hidden="true">1.3.</strong> Wallet and user’s tokens</a></li><li class="chapter-item expanded "><a href="../tutorials/page-1.3.html" class="active"><strong aria-hidden="true">1.4.</strong> Swapping tokens</a></li><li class="chapter-item "><a href="../tutorials/page-1.4.html"><strong aria-hidden="true">1.5.</strong> Adding and removing liquidity</a></li><li class="chapter-item "><a href="../tutorials/page-1.5.html"><strong aria-hidden="true">1.6.</strong> Conclusion</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">trilitech_task</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <h1 id="swapping-tokens"><a class="header" href="#swapping-tokens">Swapping tokens</a></h1>
+<h3 id="designing-the-ui"><a class="header" href="#designing-the-ui">Designing the UI</a></h3>
+<p>Regarding swapping XTZ and tzBTC, we aim to UI to look something like this:</p>
+<p><img src="images/image-1.png" alt="image-1" /></p>
+<p>There are 2 text inputs, the one on the left is editable and will let the user input the amount of XTZ or tzBTC they want to exchange and the one on the right will be disabled and will display the corresponding amount they’ll get in the other token. The button in the middle with the 2 arrows will allow the user to switch the input between XTZ and tzBTC.</p>
+<p>Going into the details of how the text inputs are implemented would go beyond the scope of this tutorial, but you can have a look at it in the <code>UserInput.svelte</code> file.</p>
+<h3 id="handling-user-input"><a class="header" href="#handling-user-input">Handling user input</a></h3>
+<p>Each input with its token icon and max field is the same component, the parent component tracks the position of each to update their UI accordingly. Internally, each input component keeps track of the user’s input and the available balance to display error messages if the balance is too low. Each update in the input is dispatched to the parent component to adjust the general UI.</p>
+<ol>
+<li>Make sure the <code>SwapView.svelte</code> file looks something like this:</li>
+</ol>
+<pre><code class="language-TS">&lt;script lang=&quot;ts&quot;&gt;
+  ... your TypeScript code
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+   ... your SASS code
+&lt;/style&gt;
+
+... your HTML code
+</code></pre>
+<p>Import the following libraries and components inside the <code>&lt;script&gt;</code> tag:</p>
+<pre><code class="language-TS">  import { onMount } from &quot;svelte&quot;;
+  import UserInput from &quot;./UserInput.svelte&quot;;
+  import { type token, TxStatus } from &quot;../types&quot;;
+  import {
+    xtzToTokenTokenOutput,
+    tokenToXtzXtzOutput,
+    calcSlippageValue
+  } from &quot;../lbUtils&quot;;
+  import store from &quot;../store&quot;;
+  import { displayTokenAmount, fetchBalances, calcDeadline } from &quot;../utils&quot;;
+  import { dexAddress, tzbtcAddress, XTZ, tzBTC } from &quot;../config&quot;;
+</code></pre>
+<p>Below this, also declare these variables:</p>
+<pre><code class="language-TS">  let tokenFrom: token = &quot;XTZ&quot;;
+  let tokenTo: token = &quot;tzBTC&quot;;
+  let inputFrom = &quot;&quot;;
+  let inputTo = &quot;&quot;;
+  let minimumOutput = 0;
+  let xtzToTzbtc = 0;
+  let tzbtcToXtz = 0;
+  let slippage: &quot;0.1&quot; | &quot;0.5&quot; | &quot;1&quot; = &quot;0.1&quot;;
+  let insufficientBalance = false;
+  let resetInputs = false;
+  let swapStatus = TxStatus.NoTransaction;
+</code></pre>
+<p>Also don’t forget to include the <code>onMount</code> function we created previous and the end of the <code>&lt;script&gt;</code>.</p>
+<ol start="2">
+<li>Every time an update is sent to the parent component (SwapView.svelte), the data provided with the update is passed to the saveInput. This is achieved by the follow in the <code>SwapView.svelte</code> file:</li>
+</ol>
+<pre><code class="language-TS">const saveInput = ev =&gt; {
+  const { token, val, insufficientBalance: insufBlnc } = ev.detail;
+  insufficientBalance = insufBlnc;
+  if (token === tokenFrom &amp;&amp; val &gt; 0) {
+    inputFrom = val.toString();
+    inputTo = &quot;&quot;;
+    if (tokenFrom === &quot;XTZ&quot;) {
+      // calculates tzBTC amount
+      let tzbtcAmount = xtzToTokenTokenOutput({
+        xtzIn: val * 10 ** XTZ.decimals,
+        xtzPool: $store.dexInfo.xtzPool,
+        tokenPool: $store.dexInfo.tokenPool
+      });
+      if (tzbtcAmount) {
+        inputTo = tzbtcAmount.dividedBy(10 ** tzBTC.decimals).toPrecision(6);
+      }
+      // calculates minimum output
+      minimumOutput = calcSlippageValue(&quot;tzBTC&quot;, +inputTo, +slippage);
+    } else if (tokenFrom === &quot;tzBTC&quot;) {
+      // calculates XTZ amount
+      let xtzAmount = tokenToXtzXtzOutput({
+        tokenIn: val * 10 ** tzBTC.decimals,
+        xtzPool: $store.dexInfo.xtzPool,
+        tokenPool: $store.dexInfo.tokenPool
+      });
+      if (xtzAmount) {
+        inputTo = xtzAmount.dividedBy(10 ** XTZ.decimals).toPrecision(8);
+      }
+      // calculates minimum output
+      minimumOutput = calcSlippageValue(&quot;XTZ&quot;, +inputTo, +slippage);
+    }
+  } else {
+    inputFrom = &quot;&quot;;
+    inputTo = &quot;&quot;;
+  }
+};
+</code></pre>
+<div id="admonition-what-are-these" class="admonition tip">
+<div class="admonition-title">
+<p>What are these?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-are-these"></a></p>
+</div>
+<div>
+<ul>
+<li>The values necessary for the calculations of the token amounts are destructured from the <code>ev.detail</code> object.</li>
+<li>The function verifies that the values are received from the token that is currently active (the one on the left).</li>
+<li>If that token is XTZ, the amount in tzBTC is calculated via the <code>xtzToTokenTokenOutput</code> function (more on that below).</li>
+<li>If that token is tzBTC, the amount in XTZ is calculated via the <code>tokenToXtzXtzOutput</code> function (more on that below).</li>
+<li>The minimum amount to be expected according to the slippage set by the user is calculated by the <code>calcSlippage</code> function.</li>
+</ul>
+</div>
+</div>
+<div id="admonition-note" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note"></a></p>
+</div>
+<div>
+<p>The “slippage” refers to the percentage that the user accepts to lose during the trade, a loss of tokens can happen according to the state of the liquidity pools. For example, if 100 tokens A can be swapped for 100 tokens B with a slippage of 1%, it means that you will receive between 99 and 100 tokens B.</p>
+</div>
+</div>
+<h3 id="exchanging-xtz-for-tzbtc-for-xtz"><a class="header" href="#exchanging-xtz-for-tzbtc-for-xtz">Exchanging XTZ for tzBTC for XTZ</a></h3>
+<p>Both <code>xtzToTokenTokenOutput</code> and <code>tokenToXtzXtzOutput</code> are an aadaptation fro this <a href="https://github.com/kukai-wallet/kukai-dex-calculations">repository</a> which will allow us to calculate how many tzBTC a user will get according to the XTZ amount they input and vice-versa.</p>
+<ol>
+<li>This is achieved using this function:</li>
+</ol>
+<pre><code class="language-TS">export const xtzToTokenTokenOutput = (p: {
+  xtzIn: BigNumber | number;
+  xtzPool: BigNumber | number;
+  tokenPool: BigNumber | number;
+}): BigNumber | null =&gt; {
+  let { xtzIn, xtzPool: _xtzPool, tokenPool } = p;
+  let xtzPool = creditSubsidy(_xtzPool);
+  let xtzIn_ = new BigNumber(0);
+  let xtzPool_ = new BigNumber(0);
+  let tokenPool_ = new BigNumber(0);
+  try {
+    xtzIn_ = new BigNumber(xtzIn);
+    xtzPool_ = new BigNumber(xtzPool);
+    tokenPool_ = new BigNumber(tokenPool);
+  } catch (err) {
+    return null;
+  }
+  if (
+    xtzIn_.isGreaterThan(0) &amp;&amp;
+    xtzPool_.isGreaterThan(0) &amp;&amp;
+    tokenPool_.isGreaterThan(0)
+  ) {
+    const numerator = xtzIn_.times(tokenPool_).times(new BigNumber(998001));
+    const denominator = xtzPool_
+      .times(new BigNumber(1000000))
+      .plus(xtzIn_.times(new BigNumber(998001)));
+    return numerator.dividedBy(denominator);
+  } else {
+    return null;
+  }
+};
+</code></pre>
+<p>The <code>xtzToTokenTokenOutput</code> function requires 3 values to calculate an output in tzBtc from an input in XTZ: the said amount in XTZ (<code>xtzIn</code>), the state of the XTZ pool in the contract (<code>xtzPool</code>) and the state of the SIRS pool (<code>tokenPool</code>). Most of the modifications made to the original functions apply to the use of BigNumber in order to make it work more smoothly with Taquito. The function then returns the corresponding amount in tzBTC or <code>null</code> if an error occurs.</p>
+<ol start="2">
+<li>The same for the <code>tokenToXtzXtzOutput</code>:</li>
+</ol>
+<pre><code class="language-TS">export const tokenToXtzXtzOutput = (p: {
+  tokenIn: BigNumber | number;
+  xtzPool: BigNumber | number;
+  tokenPool: BigNumber | number;
+}): BigNumber | null =&gt; {
+  const { tokenIn, xtzPool: _xtzPool, tokenPool } = p;
+  let xtzPool = creditSubsidy(_xtzPool);
+  let tokenIn_ = new BigNumber(0);
+  let xtzPool_ = new BigNumber(0);
+  let tokenPool_ = new BigNumber(0);
+  try {
+    tokenIn_ = new BigNumber(tokenIn);
+    xtzPool_ = new BigNumber(xtzPool);
+    tokenPool_ = new BigNumber(tokenPool);
+  } catch (err) {
+    return null;
+  }
+  if (
+    tokenIn_.isGreaterThan(0) &amp;&amp;
+    xtzPool_.isGreaterThan(0) &amp;&amp;
+    tokenPool_.isGreaterThan(0)
+  ) {
+    let numerator = new BigNumber(tokenIn)
+      .times(new BigNumber(xtzPool))
+      .times(new BigNumber(998001));
+    let denominator = new BigNumber(tokenPool)
+      .times(new BigNumber(1000000))
+      .plus(new BigNumber(tokenIn).times(new BigNumber(999000)));
+    return numerator.dividedBy(denominator);
+  } else {
+    return null;
+  }
+};
+</code></pre>
+<p>After the corresponding amount of XTZ or tzBTC is calculated according to the inputs of the user, the UI unlocks and is ready for a swap.</p>
+<h3 id="creating-a-swap-transaction"><a class="header" href="#creating-a-swap-transaction">Creating a swap transaction:</a></h3>
+<p>Swapping the tokens is pretty intensive as they are multiple moving parts that must play in unison. </p>
+<p>Describing step by step what happens after the user clicks on the Swap button, this function:</p>
+<pre><code class="language-TS">const swap = async () =&gt; {
+  try {
+    if (isNaN(+inputFrom) || isNaN(+inputTo)) {
+      return;
+    }
+  
+  ...
+  } catch (error) {
+    console.log(error);
+    swapStatus = TxStatus.Error;
+    store.updateToast(true, &quot;An error has occurred&quot;);
+  }
+};
+</code></pre>
+<p>The swap function is triggered when the user clicks the Swap button. The first thing to do is to check if there is a valid value for <code>inputFrom</code>, i.e. the token that the user wants to exchange (XTZ or tzBTC), and a valid value for inputTo, i.e. the token that the user will receive. There is no point in going further if those two values are not set properly.</p>
+<p>Next, you update the UI in order to show the user that the transaction is getting ready:</p>
+<pre><code class="language-TS">enum TxStatus {
+  NoTransaction,
+  Loading,
+  Success,
+  Error
+}
+
+swapStatus = TxStatus.Loading;
+store.updateToast(true, &quot;Waiting to confirm the swap...&quot;);
+const lbContract = await $store.Tezos.wallet.at(dexAddress);
+const deadline = calcDeadline();
+</code></pre>
+<p>This creates an enum to represent the status of the transaction (available in the <code>type.ts</code> file) and you update the <code>swapStatus</code> variable responsible for updating the UI and blocking the inputs. The store is also updated with the updateToast() method to get a simple toast to show up in the interface.</p>
+<p>Afterwards, it creates the <code>ContractAbstraction</code> from Taquito in order to interact with the DEX and you also calculate the deadline.</p>
+<div id="admonition-note-1" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note-1"></a></p>
+</div>
+<div>
+<p>The Liquidity Baking contract expects you to pass a deadline for the swap, the transaction will be rejected if the deadline is expired.</p>
+</div>
+</div>
+<h3 id="swapping-tzbtc-for-xtz"><a class="header" href="#swapping-tzbtc-for-xtz">Swapping tzBTC for XTZ</a></h3>
+<p>There are 2 use ases where you’d like the user to select either XTZ or tzBTC as the token to swap. </p>
+<ol>
+<li>Firstly looking at tzBTC to XTZ, we can use the following function:</li>
+</ol>
+<pre><code class="language-TS">if (tokenFrom === &quot;tzBTC&quot;) {
+  const tzBtcContract = await $store.Tezos.wallet.at(tzbtcAddress);
+  const tokensSold = Math.floor(+inputFrom * 10 ** tzBTC.decimals);
+  let batch = $store.Tezos.wallet
+    .batch()
+    .withContractCall(tzBtcContract.methods.approve(dexAddress, 0))
+    .withContractCall(
+    tzBtcContract.methods.approve(dexAddress, tokensSold)
+    )
+    .withContractCall(
+    lbContract.methods.tokenToXtz(
+        $store.userAddress,
+        tokensSold,
+        minimumOutput,
+        deadline
+      )
+    )
+    .withContractCall(tzBtcContract.methods.approve(dexAddress, 0));
+  const batchOp = await batch.send();
+  await batchOp.confirmation();
+}
+</code></pre>
+<p>The major difference between swapping XTZ to tzBTC and swapping tzBTC to XTZ is that the latter requires 3 additional operations: </p>
+<ul>
+<li>One to set the current permission for the LB DEX (if any) to zero.</li>
+<li>One to register the LB DEX as an operator within the tzBTC contract with the amount of tokens that it is allowed to spend on behalf of the user.</li>
+<li>One to set this amount back to zero and avoid later uses of the given permission.</li>
+</ul>
+<p>How this works is that:</p>
+<ul>
+<li>
+<p>You call the <code>batch()</code> method present on the <code>wallet</code> or <code>contract</code> property of the instance of the <code>TezosToolkit</code>.</p>
+</li>
+<li>
+<p>This returns a batch instance with different methods that you can use to create transactions, in our example, <code>withContractCall()</code> is a method that will add a new contract call to the batch of operations.</p>
+</li>
+<li>
+<p>As a parameter for <code>withContractCall()</code>, you pass the contract call as if you would call it on its own, by using the name of the entrypoint on the methods property of the <code>ContractAbstraction</code>.</p>
+</li>
+<li>
+<p>Therefore you batch 1 operation to set the permission of the LB DEX within the tzBTC contract to zero, 1 operation to approve the amount required by the swap, 1 operation to confirm the swap within the LB DEX contract, and 1 operation to set the permission of the LB DEX back to zero.</p>
+</li>
+<li>
+<p>On the returned batch, you call the <code>.send()</code> method to forge the transaction, sign it and send it to the Tezos mempool, which returns an operation.</p>
+</li>
+<li>
+<p>You can <code>await</code> the confirmation of the transaction by calling <code>.confirmation()</code> on the operation returned in the step above.</p>
+</li>
+</ul>
+<div id="admonition-note-2" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note-2"></a></p>
+</div>
+<div>
+<p>The penultimate transaction: the tokenToXtz entrypoint of the LB contract requires 4 parameters.</p>
+</div>
+</div>
+<p>After the transaction is sent by calling the <code>.send()</code> method, it calls <code>.confirmation()</code> on the operation object to wait for one confirmation (which is the default if you don’t pass a parameter to the method).</p>
+<h3 id="swapping-xtz-to-tzbtc"><a class="header" href="#swapping-xtz-to-tzbtc">Swapping XTZ to tzBTC</a></h3>
+<p>The <code>xtzToToken</code> entrypoint takes 3 parameters:</p>
+<ul>
+<li>The address of the account that will receive the tzBTC tokens</li>
+<li>The expected amount of tzBTC to be received</li>
+<li>The deadline</li>
+</ul>
+<p>Therefore using the following code will allow for it easily swapp the currencies:</p>
+<pre><code class="language-TS">const op = await lbContract.methods
+  .xtzToToken($store.userAddress, minimumOutput, deadline)
+  .send({ amount: +inputFrom });
+await op.confirmation();
+</code></pre>
+<p>In addition to that, you have to attach the right amount of XTZ to the transaction. This can be achieved very easily with Taquito.</p>
+<div id="admonition-note-3" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note-3"></a></p>
+</div>
+<div>
+<p>The <code>.send()</code> method that you call on the output of the entrypoint call? If you didn’t know, you can pass parameters to this method, one of the most important ones is an <code>amount</code> of XTZ to send along with the transaction. Just pass an object with an amount property and a value of the amount of tez you want to attach, and that’s it!</p>
+</div>
+</div>
+<p>Just like any other transaction, you get an operation object and call <code>.confirmation()</code> on it to wait for the operation to be included in a new block.</p>
+<h3 id="updating-the-ui"><a class="header" href="#updating-the-ui">Updating the UI</a></h3>
+<p>Giving the user any indiation of a sucessful or not transaction is crucial feedback. </p>
+<p>If the swap succeeded, it will fetch the user’s new balances and provide visual feedback:</p>
+<pre><code class="language-TS">const res = await fetchBalances($store.Tezos, $store.userAddress);
+if (res) {
+  store.updateUserBalance(&quot;XTZ&quot;, res.xtzBalance);
+  store.updateUserBalance(&quot;tzBTC&quot;, res.tzbtcBalance);
+  store.updateUserBalance(&quot;SIRS&quot;, res.sirsBalance);
+} else {
+  store.updateUserBalance(&quot;XTZ&quot;, null);
+  store.updateUserBalance(&quot;tzBTC&quot;, null);
+  store.updateUserBalance(&quot;SIRS&quot;, null);
+}
+// visual feedback
+store.updateToast(true, &quot;Swap successful!&quot;);
+</code></pre>
+<p>If the sway failed, it will redirect to the <code>catch</code> branch where you also have to provide visual feedback and update the UI:</p>
+<pre><code class="language-TS">swapStatus = TxStatus.Error;
+store.updateToast(true, &quot;An error has occurred&quot;);
+</code></pre>
+<p>Setting swapStatus to TxStatus.Error will remove the loading interface you set during the swap before you display a toast to indicate that the transaction failed.</p>
+<p>Lastly, the <code>finally</code> branch will reset the UI after period of time. In this case 3 seconds:</p>
+<pre><code class="language-TS">finally {
+  setTimeout(() =&gt; {
+    swapStatus = TxStatus.NoTransaction;
+    store.showToast(false);
+  }, 3000);
+}
+</code></pre>
+<div id="admonition-design-considerations" class="admonition tip">
+<div class="admonition-title">
+<p>Design considerations&gt;</p>
+<p><a class="admonition-anchor-link" href="#admonition-design-considerations"></a></p>
+</div>
+<div>
+<ul>
+<li>Structure your code into distinct steps, such as updating the UI, forging the transaction, emitting the transaction, and updating the UI again.</li>
+<li>Provide visual feedback to users, such as a spinner or loading animation, to indicate that the app is processing their request.</li>
+<li>Disable the UI while the transaction is in progress to prevent confusion and unexpected behavior. Users should not be able to initiate multiple transactions at once.</li>
+<li>Reset the UI to its original state once the transaction is complete, to avoid confusing the user and make sure the interface is consistent.</li>
+</ul>
+</div>
+</div>
+<p><a href="/tutorials/page-1.2.html">← Previous Page</a></p>
+<p><a href="/tutorials/page-1.4.html">Next Page →</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tutorials/page-1.2.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../tutorials/page-1.4.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tutorials/page-1.2.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../tutorials/page-1.4.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../theme/pagetoc.js"></script>
+
+
+    </body>
+</html>

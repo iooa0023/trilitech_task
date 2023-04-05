@@ -1,0 +1,515 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js coal">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Wallet and user’s tokens - trilitech_task</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../theme/pagetoc.css">
+        <link rel="stylesheet" href="../././mdbook-admonish.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "coal" : "coal";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('coal')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item affix "><li class="part-title">Tutorials</li><li class="chapter-item expanded "><a href="../tutorials/overview-1.0.html"><strong aria-hidden="true">1.</strong> Creating a Simple dApp on Tezos</a><a class="toggle"><div>❱</div></a></li><li><ol class="section"><li class="chapter-item "><a href="../tutorials/page-1.0.html"><strong aria-hidden="true">1.1.</strong> Pre-requisites</a></li><li class="chapter-item "><a href="../tutorials/page-1.1.html"><strong aria-hidden="true">1.2.</strong> Setting up the dapp</a></li><li class="chapter-item expanded "><a href="../tutorials/page-1.2.html" class="active"><strong aria-hidden="true">1.3.</strong> Wallet and user’s tokens</a></li><li class="chapter-item "><a href="../tutorials/page-1.3.html"><strong aria-hidden="true">1.4.</strong> Swapping tokens</a></li><li class="chapter-item "><a href="../tutorials/page-1.4.html"><strong aria-hidden="true">1.5.</strong> Adding and removing liquidity</a></li><li class="chapter-item "><a href="../tutorials/page-1.5.html"><strong aria-hidden="true">1.6.</strong> Conclusion</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">trilitech_task</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <!-- Page table of contents -->
+                        <div class="sidetoc"><nav class="pagetoc"></nav></div>
+
+                        <h1 id="wallet-and-users-tokens"><a class="header" href="#wallet-and-users-tokens">Wallet and user’s tokens</a></h1>
+<h3 id="setting-up-the-wallet"><a class="header" href="#setting-up-the-wallet">Setting up the wallet</a></h3>
+<p>The wallet is a key element of your dapp, without it, the users won’t be able to interact with the Tezos blockchain, which defeats your purpose. There are multiple considerations to take into account when you are setting up the wallet that we will explain below.</p>
+<ol>
+<li>Make sure the <code>Wallet.svelte</code> file looks something like this:</li>
+</ol>
+<pre><code class="language-TS">&lt;script lang=&quot;ts&quot;&gt;
+  ... your TypeScript code
+&lt;/script&gt;
+
+&lt;style lang=&quot;scss&quot;&gt;
+   ... your SASS code
+&lt;/style&gt;
+
+... your HTML code
+</code></pre>
+<p>Import the following libraries and components inside the <code>&lt;script&gt;</code> tag:</p>
+<pre><code class="language-TS">  import { onMount } from &quot;svelte&quot;;
+  import { BeaconWallet } from &quot;@taquito/beacon-wallet&quot;;
+  import store, { type TezosAccountAddress } from &quot;../store&quot;;
+  import { rpcUrl, network } from &quot;../config&quot;;
+  import { shortenHash, fetchBalances } from &quot;../utils&quot;;
+</code></pre>
+<p>Below this, also declare these variables:</p>
+<pre><code class="language-TS"> let connectedNetwork = &quot;&quot;;
+ let walletIcon = &quot;&quot;;
+ let walletName = &quot;&quot;;
+</code></pre>
+<div id="admonition-what-are-these" class="admonition tip">
+<div class="admonition-title">
+<p>What are these?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-are-these"></a></p>
+</div>
+<div>
+<ul>
+<li><code>connectedNetwork</code>: Used to store the name or identifier of a network that a user is currently connected to.</li>
+<li><code>walletIcon</code>: Used to store the file path or URL of an icon or logo that represents a user’s wallet.</li>
+<li><code>walletName</code>: Used to store the name or identifier of a wallet that a user is currently using.</li>
+</ul>
+</div>
+</div>
+<p>Also don’t forget to include the <code>onMount</code> function we created previous and the end of the <code>&lt;script&gt;</code>.</p>
+<ol start="2">
+<li>We want to isolate the wallet and its different interactions and values in the same component, called <code>Wallet.svelte</code> in our example. When using the Beacon SDK, it is crucial to keep a single instance of Beacon running in order to prevent bugs.</li>
+</ol>
+<p>Add the following inside the <code>&lt;script&gt;</code> tag:</p>
+<pre><code class="language-TS">onMount(async () =&gt; {
+    const wallet = new BeaconWallet({
+      name: &quot;Tezos dev portal dapp tutorial&quot;,
+      preferredNetwork: network
+    });
+    store.updateWallet(wallet);
+    const activeAccount = await wallet.client.getActiveAccount();
+    if (activeAccount) {
+      const userAddress = (await wallet.getPKH()) as TezosAccountAddress;
+      store.updateUserAddress(userAddress);
+      $store.Tezos.setWalletProvider(wallet);
+      await getWalletInfo(wallet);
+      // fetches user's XTZ, tzBTC and SIRS balances
+      const res = await fetchBalances($store.Tezos, userAddress);
+      if (res) {
+        store.updateUserBalance(&quot;XTZ&quot;, res.xtzBalance);
+        store.updateUserBalance(&quot;tzBTC&quot;, res.tzbtcBalance);
+        store.updateUserBalance(&quot;SIRS&quot;, res.sirsBalance);
+      } else {
+        store.updateUserBalance(&quot;XTZ&quot;, null);
+        store.updateUserBalance(&quot;tzBTC&quot;, null);
+        store.updateUserBalance(&quot;SIRS&quot;, null);
+      }
+    }
+  });
+</code></pre>
+<p>We create the instance of the <code>BeaconWallet</code> by providing a name for the dapp (it can be whatever you want) that will be displayed in the wallet UI and the network you want to connect to (imported from the config file). The instance of the wallet is then saved in the store.</p>
+<p>Now, you want to check if the user connected a wallet before. Beacon will keep track of live connections in the local storage, this is how your users can navigate to your dapp and have their wallet connected automagically!</p>
+<p>The <code>BeaconWallet</code> instance provides a <code>client</code> property with different methods, the one you need here is <code>getActiveAccount()</code>, which will retrieve any live connection stored in the local storage. If there is a live connection, you can fetch the user’s address and save it into the store, update the store with the user’s address before setting up the wallet as the signer with <code>$store.Tezos.setWalletProvider(wallet)</code>, get the information you need about the wallet (mainly, the name of the wallet) with the getWalletInfo() function and then, fetch the balances for the address that is connected with the fetchBalances() function described earlier. </p>
+<p>Once the balances are fetched, they are saved into the store to be displayed in the interface.</p>
+<div id="admonition-note" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note"></a></p>
+</div>
+<div>
+<p>TezosAccountAddress is a custom type I like to use to validate Tezos addresses for implicit accounts: <code>type TezosAccountAddress = tz${&quot;1&quot; | &quot;2&quot; | &quot;3&quot;}${string}</code>, TypeScript will raise a warning if you try to use a string that doesn’t match this pattern.</p>
+</div>
+</div>
+<h3 id="connecting-the-wallet"><a class="header" href="#connecting-the-wallet">Connecting the wallet</a></h3>
+<p>Taquito and Beacon working in unison makes it very easy to connect the wallet. </p>
+<ol>
+<li>By adding a few lines of code so it looks like this:</li>
+</ol>
+<pre><code class="language-TS">const connectWallet = async () =&gt; {
+  if (!$store.wallet) {
+    const wallet = new BeaconWallet({
+      name: &quot;Tezos dev portal dapp tutorial&quot;,
+      preferredNetwork: network
+    });
+    store.updateWallet(wallet);
+  }
+  await $store.wallet.requestPermissions({
+    network: { type: network, rpcUrl }
+  });
+  const userAddress = (await $store.wallet.getPKH()) as TezosAccountAddress;
+  store.updateUserAddress(userAddress);
+  $store.Tezos.setWalletProvider($store.wallet);
+  // finds account info
+  await getWalletInfo($store.wallet);
+  // fetches user's XTZ, tzBTC and SIRS balances
+  const res = await fetchBalances($store.Tezos, userAddress);
+  if (res) {
+    store.updateUserBalance(&quot;XTZ&quot;, res.xtzBalance);
+    store.updateUserBalance(&quot;tzBTC&quot;, res.tzbtcBalance);
+    store.updateUserBalance(&quot;SIRS&quot;, res.sirsBalance);
+  } else {
+    store.updateUserBalance(&quot;XTZ&quot;, null);
+    store.updateUserBalance(&quot;tzBTC&quot;, null);
+    store.updateUserBalance(&quot;SIRS&quot;, null);
+  }
+};
+</code></pre>
+<p>The connection will be handled in a specific function called connectWallet. If the store doesn’t hold an instance of the <code>BeaconWallet</code> (if the dapp didn’t detect any live connection on mount), you create that instance and save it in the store.</p>
+<p>Next, you ask the user to select a wallet with the <code>requestPermissions()</code> method present on the instance of the BeaconWallet. The parameter is an object where you indicate the network you want to connect to as well as the URL of the Tezos RPC node you will interact with.</p>
+<p>After the user selects a wallet to use with our dapp, you get their address with the <code>getPKH()</code> method on the <code>BeaconWallet</code> instance, you update the signer in the <code>TezosToolkit</code> instance by passing the wallet instance to <code>setWalletProvider()</code>, you get the information you need from the wallet and you fetch the user’s balances.</p>
+<div id="admonition-default" class="admonition success">
+<div>
+<p>Now, the wallet is connected and the user is shown their different balances, as well as a connection status in the sidebar!</p>
+</div>
+</div>
+<div id="admonition-important" class="admonition warning">
+<div class="admonition-title">
+<p>IMPORTANT</p>
+<p><a class="admonition-anchor-link" href="#admonition-important"></a></p>
+</div>
+<div>
+<p>No matter how you decide to design your dapp, it is crucial to maintain only one instance of the BeaconWallet, and it is strongly advised to do the same with the instance of the TezosToolkit. If you create multiple instances, it can lead to complications with the state of your application and cause issues with Taquito overall.</p>
+</div>
+</div>
+<h3 id="disconnecting-the-wallet"><a class="header" href="#disconnecting-the-wallet">Disconnecting the wallet</a></h3>
+<p>Disconnecting the wallet is as important as connecting it. A lot of users have multiple wallets and addresses within the same wallet that they want to use to interact with your dapp.</p>
+<p>Therefore adding the following code inside the <code>&lt;script&gt;</code> tag after our <code>connectWallet</code> funcctionlity will ensure this making it easier:</p>
+<pre><code class="language-TS">const disconnectWallet = async () =&gt; {
+  $store.wallet.client.clearActiveAccount();
+  store.updateWallet(undefined);
+  store.updateUserAddress(undefined);
+  connectedNetwork = &quot;&quot;;
+  walletIcon = &quot;&quot;;
+};
+</code></pre>
+<div id="admonition-what-are-these-1" class="admonition tip">
+<div class="admonition-title">
+<p>What are these?</p>
+<p><a class="admonition-anchor-link" href="#admonition-what-are-these-1"></a></p>
+</div>
+<div>
+<p>There are different steps to disconnect the wallet and reset the state of the dapp:</p>
+<ul>
+<li><code>$store.wallet.client.clearActiveAccount()</code>: Terminates the current connection to Beacon.</li>
+<li><code>store.updateWallet(undefined)</code>: Removes the wallet from the state in order to trigger a reload of the interface.</li>
+<li><code>store.updateUserAddress(undefined)</code>: Removes the current user’s address from the state to update the UI.</li>
+<li><code>connectedNetwork = &quot;&quot;; walletIcon = &quot;&quot;</code>: needed to reset the state of the dapp and present an interface where no wallet is connected.</li>
+</ul>
+<p>The call to <code>clearActiveAccount()</code> on the wallet instance is the only thing that you will do in whatever dapp you are building, it will remove all the data in the local storage and when your user revisits your dapp, they won’t be automatically connected with their wallet.</p>
+</div>
+</div>
+<div id="admonition-design-considerations" class="admonition example">
+<div class="admonition-title">
+<p>Design considerations</p>
+<p><a class="admonition-anchor-link" href="#admonition-design-considerations"></a></p>
+</div>
+<div>
+<ul>
+<li>
+<p>Avoid prompting users to connect their wallet immediately after the dapp loads. Provide information about your dapp and a clear, prominently displayed button for users to manually connect their wallet.</p>
+</li>
+<li>
+<p>Ensure the button to connect a wallet stands out in your interface and is easy to locate.</p>
+</li>
+<li>
+<p>Keep the button in a predictable position, such as the top-left or top-right of the UI, to avoid user confusion.</p>
+</li>
+<li>
+<p>Use clear and concise language for the button text, such as “Connect.” Display the wallet status, network, and balance to keep users informed.</p>
+</li>
+<li>
+<p>Enable/disable interactions that depend on a connected wallet to prevent user confusion.</p>
+</li>
+</ul>
+</div>
+</div>
+<h3 id="fetching-users-balances"><a class="header" href="#fetching-users-balances">Fetching user’s balances</a></h3>
+<p>Fetching and displaying user balances is crucial in a dapp, and should not be overlooked. To ensure balances are shown and updated correctly, create a function in the utils.ts file and import it where necessary. In order to fetch balances, we use Taquito for XTZ and the <a href="https://api.tzkt.io/">TzKT API</a> for tzBTC and SIRS. TzKT is a useful tool for building more complex applications on Tezos.</p>
+<ol>
+<li>Import the following to the top the <code>utils.ts</code>:</li>
+</ol>
+<pre><code class="language-TS">import BigNumber from &quot;bignumber.js&quot;;
+import type { TezosToolkit } from &quot;@taquito/taquito&quot;;
+import type { token } from &quot;./types&quot;;
+import type { TezosAccountAddress } from &quot;./store&quot;;
+import { tzbtcAddress, sirsAddress } from &quot;./config&quot;;
+</code></pre>
+<ol start="2">
+<li>Then add the function <code>fetchBalances</code>:</li>
+</ol>
+<pre><code class="language-TS">export const fetchBalances = async (
+  Tezos: TezosToolkit,
+  userAddress: TezosAccountAddress
+): Promise&lt;{
+  xtzBalance: number;
+  tzbtcBalance: number;
+  sirsBalance: number;
+} | null&gt; =&gt; {
+  try {
+    // the code will be here
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+}
+</code></pre>
+<p>The <code>fetchBalances</code> function will take 2 parameters: An instance of the <code>TezosToolkit</code> to fetch the user’s XTZ balance and the user’s address to retrieve the balances that match the address. It will return an object with 3 properties: <code>xtzBalance</code>, <code>tzbtcBalance</code>, and <code>sirsBalance</code> or <code>null</code> if any error occurs.</p>
+<ol start="3">
+<li>Inisde the <code>try</code> add the following:</li>
+</ol>
+<pre><code class="language-TS">const xtzBalance = await Tezos.tz.getBalance(userAddress);
+if (!xtzBalance) throw &quot;Unable to fetch XTZ balance&quot;;
+</code></pre>
+<p>The instance of the <code>TezosToolkit</code> includes a property called tz that allows different Tezos-specific actions, one of them is about fetching the balance of an account by its address through the <code>getBalance()</code> method that takes the address of the account as a parameter.</p>
+<p>Next, you check for the existence of a balance and you reject the promise if it doesn’t exist. If it does, the balance will be available as a <a href="https://mikemcl.github.io/bignumber.js/">BigNumber</a>.</p>
+<div id="admonition-note-1" class="admonition note">
+<div class="admonition-title">
+<p>Note</p>
+<p><a class="admonition-anchor-link" href="#admonition-note-1"></a></p>
+</div>
+<div>
+<p>Taquito returns numeric values from the blockchain as BigNumber, because some values could be very big numbers and JavaScript is notorious for being bad at handling large numbers</p>
+</div>
+</div>
+<ol start="4">
+<li>Once the XTZ balance has been fetched, we can continue and fetch the balances using the following:</li>
+</ol>
+<pre><code class="language-TS">import { tzbtcAddress, sirsAddress } from &quot;./config&quot;;
+
+// previous code for the function
+const res = await fetch(
+  `https://api.tzkt.io/v1/tokens/balances?account=${userAddress}&amp;token.contract.in=${tzbtcAddress},${sirsAddress}`
+);
+if (res.status === 200) {
+  const data = await res.json();
+  if (Array.isArray(data) &amp;&amp; data.length === 2) {
+    const tzbtcBalance = +data[0].balance;
+    const sirsBalance = +data[1].balance;
+    if (!isNaN(tzbtcBalance) &amp;&amp; !isNaN(sirsBalance)) {
+      return {
+        xtzBalance: xtzBalance.toNumber(),
+        tzbtcBalance,
+        sirsBalance
+      };
+    } else {
+      return null;
+    }
+  }
+} else {
+  throw &quot;Unable to fetch tzBTC and SIRS balances&quot;;
+}
+</code></pre>
+<div id="admonition-info" class="admonition info">
+<div class="admonition-title">
+<p>Info</p>
+<p><a class="admonition-anchor-link" href="#admonition-info"></a></p>
+</div>
+<div>
+<p>This <a href="https://api.tzkt.io/#operation/Tokens_GetTokenBalances">link</a> to get more details about how to <code>fetch</code> token balances with the TzKT API. It’s a simple fetch with a URL that is built dynamically to include the user’s address and the addresses of the contracts for tzBTC and SIRS.</p>
+</div>
+</div>
+When the promise resolves with a `200 OK` code, this means that the data has been received. You parse it into JSON with the `.json()` method on the response and we check that the data has the expected shape, i.e. an array with 2 elements in it.
+<p>The first element is the tzBTC balance and the second one is the SIRS balance. You store them in their own variables that you cast to numbers before verifying that they were cast properly with <code>isNaN</code>. If everything goes well, the 3 balances are returned and if anything goes wrong along the way, the function returns <code>null</code>.</p>
+<ol start="5">
+<li>After fetching the balances in any component of our application, this data is stored to update the state in the <code>wallet.svelte</code>:</li>
+</ol>
+<pre><code class="language-TS">const res = await fetchBalances($store.Tezos, userAddress);
+if (res) {
+  store.updateUserBalance(&quot;XTZ&quot;, res.xtzBalance);
+  store.updateUserBalance(&quot;tzBTC&quot;, res.tzbtcBalance);
+  store.updateUserBalance(&quot;SIRS&quot;, res.sirsBalance);
+} else {
+  store.updateUserBalance(&quot;XTZ&quot;, null);
+  store.updateUserBalance(&quot;tzBTC&quot;, null);
+  store.updateUserBalance(&quot;SIRS&quot;, null);
+}
+</code></pre>
+<div id="admonition-default-1" class="admonition success">
+<div>
+<p>Now you can fetch a user’s balances in XTZ, tzBTC, and SIRS!</p>
+</div>
+</div>
+<p><a href="/tutorials/page-1.1.html">← Previous Page</a></p>
+<p><a href="/tutorials/page-1.3.html">Next Page →</a></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../tutorials/page-1.1.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../tutorials/page-1.3.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../tutorials/page-1.1.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../tutorials/page-1.3.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script>
+            const wsProtocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsAddress = wsProtocol + "//" + location.host + "/" + "__livereload";
+            const socket = new WebSocket(wsAddress);
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="../theme/pagetoc.js"></script>
+
+
+    </body>
+</html>
