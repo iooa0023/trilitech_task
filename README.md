@@ -1,12 +1,12 @@
 # trilitech_task
 
-To see work run the following:
+To see work run the following in you're terminal:
 
-git clone https://github.com/iooa0023/trilitech_task.git
+1) git clone https://github.com/iooa0023/trilitech_task.git
 
-cd trilitech_task/trilitech_task
+2) cd ../trilitech_task/trilitech_task
 
-mdbook serve
+3) mdbook serve
 
 
-Should get a localhost address to look at the work on yopur browser
+Should get a localhost address to look at task.
